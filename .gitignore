@@ -42,9 +42,6 @@ docs/roadmap2/main.toc
 
 *.last_compiled
 
-/ocaml
-/ocaml/*
-
 .depend.ocp-type
 docs/roadmap/deps.dot
 docs/roadmap/short-features.tex
@@ -76,7 +73,6 @@ aclocal.m4
 autom4te.cache
 config.log
 config.status
-emacs-plugins
 ocp-typerex.ocp
 libs/ocamlpro/yacclib/yacclib_lexer.ml
 libs/ocamlpro/yacclib/yacclib_parser.ml

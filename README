@@ -1,0 +1,46 @@
+Requirements
+============
+
+* Linux (32-bit or 64-bit)
+* OCaml >= 3.11.2
+
+Install
+=======
+
+1:  ./configure [options]
+
+Usefull options (examples):
+  --bindir=/opt/typerex
+  --with-lispdir=~/.emacs.d
+      default is a system-wide installation path
+  --with-ocp-build=<command>
+      default is 'ocp-build' if found, `pwd`/boot/ocp-build.boot otherwise
+  --disable-auto-complete
+      default is to install Emacs auto-complete, unless found in lispdir
+  --enable-cmt
+      binary-annotate typerex sources (for typerex developpers)
+
+2:  make
+3:  sudo make install
+
+Append (and/or customize) the contents of emacs.append to your ~/.emacs:
+
+4:  cat emacs.append >>~/.emacs
+
+Uninstall
+=========
+
+To remove installed binaries and libraries:
+
+- sudo make uninstall
+
+Generating .cmt(i) files for TypeRex sources
+============================================
+
+Unless you already compiled TypeRex a first time, here is how to
+generate .cmt(i) files for TypeRex itself:
+
+1:  ./configure   (without '--enable-cmt')
+2:  make
+3:  ./configure --enable-cmt
+4:  make
