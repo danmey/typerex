@@ -3194,13 +3194,39 @@ or indent all lines in the current phrase."
   (caml-complete arg)
   (modify-syntax-entry ?_ "_" typerex-mode-syntax-table))
 
+(defun typerex--try-find-alternate-file (partial-name extension)
+  (let* ((filename (concat partial-name extension))
+         (buffer (get-file-buffer filename))
+         (what (cond 
+                ((string= extension ".ml") "implementation")
+                ((string= extension ".mli") "interface"))))
+    (if buffer
+        (progn (switch-to-buffer buffer) t)
+      (if (file-exists-p filename)
+          (progn (find-file filename) t)
+        (when (and (not (string= extension ".mll"))
+                   (y-or-n-p 
+                    (format "Create %s file (%s)" what 
+                            (file-name-nondirectory filename))))
+          (find-file filename)))
+      nil)))
+
 (defun typerex-find-alternate-file ()
   "Switch Implementation/Interface."
   (interactive)
   (let ((name (buffer-file-name)))
-    (when (string-match "\\`\\(.*\\)\\.ml\\(i\\)?\\'" name)
-      (find-file (concat (typerex-match-string 1 name)
-                         (if (match-beginning 2) ".ml" ".mli"))))))
+    (when (string-match "\\`\\(.*\\)\\.ml\\([il]\\)?\\'" name)
+      (let ((partial-name (typerex-match-string 1 name)))
+        (let ((c (match-string 2 name)))
+          (cond 
+           ((string= "i" c) (unless (typerex--try-find-alternate-file 
+                                     partial-name ".mll")
+                              (typerex--try-find-alternate-file
+                               partial-name ".ml")))
+           ((string= "l" c) (typerex--try-find-alternate-file 
+                             partial-name ".mli"))
+           ((eq nil c) (typerex--try-find-alternate-file 
+                             partial-name ".mli"))))))))
 
 (defun typerex-ensure-space ()
   (let ((prec (preceding-char)))
