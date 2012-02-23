@@ -31,7 +31,7 @@
 
 (add-to-list 
  'flymake-err-line-patterns
- `(,@(concat "File \"\\(.*\\)\", line \\([0-9]+\\), characters \\([0-9]+\\)"
+ `(,(concat "File \"\\(.*\\)\", line \\([0-9]+\\), characters \\([0-9]+\\)"
             "--?\\([0-9]+\\):\\(Error\\|Warning\\): \\(.*\\)$") 1 2 3 6))
 
 (add-to-list 
