@@ -111,6 +111,7 @@
      ["Switch .ml/.mli" typerex-find-alternate-file t]
    "---"
      ["Compile..." compile t]
+     ["On-the-fly compilation" flymake-mode :style toggle :selected flymake-mode]
 
      ("Interactive Mode"
       ["Run Caml Toplevel" typerex-run-caml t]
